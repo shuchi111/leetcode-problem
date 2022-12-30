@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> solution;
+    vector<int> path;
+    vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
+        // Recursive AI solution, with adjaceny graph.
+        helper(graph, 0, path);
+        return solution;
+    }
+    
+    void helper(vector<vector<int>>& graph, int index, vector<int> path) {
+        path.push_back(index);
+        if (index == graph.size() - 1) {
+            vector<int> fullpath(path);
+            solution.push_back(fullpath);
+        }
+        for (int neighbor : graph[index]) {
+            helper(graph, neighbor, path);
+        }
+        path.pop_back();
+    }
+};
