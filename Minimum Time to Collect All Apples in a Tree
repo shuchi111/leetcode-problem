@@ -1,0 +1,31 @@
+class Solution {
+    int time;
+    unordered_map<int,vector<int>>graph;
+public:
+
+    void dfs(int node, int par, vector<bool>& hasApple) {
+        for(int next: graph[node]) {
+            if (next != par) {
+               dfs(next,node,hasApple);
+               if (hasApple[next]) {
+                   time+=2;
+                   hasApple[node] = true;
+               }
+            }
+        }
+    }
+
+    int minTime(int n, vector<vector<int>>& edges, vector<bool>& hasApple) {
+        for(vector<int> &edge: edges) {
+            int a = edge[0];
+            int b = edge[1];
+            graph[a].push_back(b);
+            graph[b].push_back(a);
+        }
+
+        time = 0;
+        dfs(0,-1,hasApple);
+
+        return time;
+    }
+};
