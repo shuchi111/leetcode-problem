@@ -1,0 +1,46 @@
+//RUNTIME: 6 - 9 MS
+//TIME COMPLEXITY: O(n), where n is the total amount of characters in the parameters words
+//SPACE COMPLEXITY:O(1), since our dictionary is a constant size of 26
+class Solution {
+public:
+    bool isAlienSorted(vector<string>& words, string order) {
+        
+        std::array<int, 26> dictionary;
+        for(int i = 0; i < order.size(); i++)
+        {
+            dictionary[order[i] - 'a'] = i;
+        }
+
+        for(int i = 1; i < words.size(); i++)
+        {
+            int j = 0;
+            while(j < words[i].size() && j < words[i - 1].size())
+            {
+                //If the same letter in the previous word is greater than
+                //the letter at the same index in the current word
+                if(dictionary[words[i][j] - 'a'] < dictionary[words[i - 1][j] - 'a'])
+                {
+                    return false;
+                }
+                else if(dictionary[words[i][j] - 'a'] > dictionary[words[i - 1][j] - 'a'])
+                {
+                    break;
+                }
+                else
+                {
+                    ++j;
+                }
+            }
+
+           //If we iterated through every single one of the elements of word[i - 1] and
+           //word[i] and they were both tied, yet word[i] was the smaller
+           //word then that means these elements are misordered.
+            if(j == words[i].size() && j < words[i - 1].size())
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+};
