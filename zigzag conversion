@@ -1,0 +1,64 @@
+class Solution {
+public:
+
+    string convert(string s, int numRows) {
+        
+    //RUNTIME: 108 - 119 MS
+    //TIME COMPLEXITY: O(row * col), where row is the value of the parameter numRows
+    //and col is the number of columns in our 2D vector
+    //SPACE COMPLEXITY: O(n), where row is the value of the parameter numRows and
+    //col is the number of columns in our 2D vector
+
+        if (numRows == 1)
+        {
+            return s;
+        }
+
+        int ROWS = numRows;
+        int sections = ceil(s.size() / (2 * numRows - 2.0));
+        int COLS = sections * (numRows - 1);
+
+        std::vector<std::vector<char>> zigZagStr(ROWS, std::vector<char>(COLS, '!'));
+
+        int i = 0;
+        int colNum = 0;
+        int rowNum = 0;
+        while (i < s.size())
+        {
+
+            while (i < s.size() && rowNum < ROWS)
+            {
+                zigZagStr[rowNum++][colNum] = s[i++];
+            }
+
+            //Move diagonally up one space. Need to subtract 2 since rowNum == ROWS here
+            rowNum -= 2;
+            ++colNum;
+
+            while (i < s.size() && rowNum > 0 && colNum < COLS)
+            {
+                zigZagStr[rowNum--][colNum++] = s[i++];
+            }
+
+            if (i == s.size()) break;
+
+
+        }
+
+        std::string returnVal = "";
+
+        for (int row = 0; row < ROWS; row++)
+        {
+
+            for (int col = 0; col < COLS; col++)
+            {
+                if (zigZagStr[row][col] != '!')
+                {
+                    returnVal.push_back(zigZagStr[row][col]);
+                }
+            }
+        }
+
+        return returnVal;
+    }
+};
