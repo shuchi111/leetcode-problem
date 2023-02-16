@@ -1,0 +1,21 @@
+
+class Solution {
+public:
+    int maxDepthDfs(const TreeNode* root)
+    {
+        if(root == nullptr)
+        {
+            return 0;
+        }
+
+        int leftVal = maxDepthDfs(root->left);
+        int rightVal = maxDepthDfs(root->right);
+
+        return std::max(leftVal, rightVal) + 1;
+    }
+
+    int maxDepth(TreeNode* root) {
+        
+        return maxDepthDfs(root);
+    }
+};
