@@ -1,0 +1,12 @@
+class Solution {
+public:
+    TreeNode* invertTree(TreeNode* root) {
+         if (!root) return 0 ;
+        TreeNode* right= invertTree(root->right);
+        TreeNode* left = invertTree(root->left);
+        //store right value in left node and left value in right node
+        root->left = right;
+        root->right = left;
+        return root;
+    }
+};
