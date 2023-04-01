@@ -1,0 +1,3 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        return idx if ((idx := bisect_left(nums, target)) < len(nums) and nums[idx] == target) else -1
